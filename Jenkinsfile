@@ -16,10 +16,15 @@ pipeline {
                 sh 'mvn clean'
             }
         }
-        stage('package') {
+        stage('install') {
             steps {
                 sh 'mvn install'
                
+            }
+        }
+        stage('package') {
+            steps {
+                sh 'mvn package'
             }
         }
     }
