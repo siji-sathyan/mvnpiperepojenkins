@@ -22,7 +22,7 @@ pipeline {
                
             }
         }
-        stage('package-maven') {
+        stage('package') {
             steps {
                 sh 'mvn package'
             }
