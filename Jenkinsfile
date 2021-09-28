@@ -38,5 +38,31 @@ pipeline {
                  }
             }
         }
+        stage('docker-build') {
+            steps {
+              script{
+                docker.withTool('docker'){
+                  sh 'docker version'
+                  sh 'docker build -t mavenimg:v1 .'
+                  sh 'docker tag mavenimg:v1 sijisdocker/mavenimg:v1'
+                }
+            }
+        }
+    }
+      stage('docker-login'){
+        steps{
+          
+            withCredentials([string(credentialsId: 'DOCKER_HUB', variable: 'PASSWORD')]) {
+              sh "docker login -u sijisdocker -p ${PASSWORD}"
+     
+        
+      }
+      }
+      }
+      stage('push image to docker hub'){
+        steps{
+        sh 'docker push sijisdocker/mavenimg:v1'
+      }
+      }
     }
 }
