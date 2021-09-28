@@ -28,5 +28,15 @@ pipeline {
                 archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
             }
         }
+        stage('Sonarqube analysis') {
+            steps {
+                script {
+                    withSonarQubeEnv('sonar'){
+                        sh 'ls'
+                        sh 'mvn sonar:sonar -DskipTests'
+                     }
+                 }
+            }
+        }
     }
 }
