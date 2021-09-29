@@ -1,3 +1,4 @@
+def dockerRun='docker run -p 80:80 -d --name mavenimg sijisdocker/mavenimg:v1'
 pipeline {
     agent {label 'agent'}
     tools{
@@ -63,6 +64,25 @@ pipeline {
       stage('push image to docker hub'){
         steps{
         sh 'docker push sijisdocker/mavenimg:v1'
+      }
+      }
+      stage('docker-login'){
+        steps{
+          
+            withCredentials([string(credentialsId: 'DOCKER_HUB', variable: 'PASSWORD')]) {
+              sh "docker login -u sijisdocker -p ${PASSWORD}"
+     
+        
+      }
+      }
+      }
+       stage('Run on server'){
+        steps{
+          
+          sshagent(['SSH-ID']) {
+            sh "ssh -o StrictHostKeyChecking=no ec2-user@35.175.115.151 ${dockerRun}"
+      }
+
       }
       }
     }
