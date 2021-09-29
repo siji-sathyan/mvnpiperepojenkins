@@ -66,16 +66,7 @@ pipeline {
         sh 'docker push sijisdocker/mavenimg:v1'
       }
       }
-      stage('docker-login'){
-        steps{
-          
-            withCredentials([string(credentialsId: 'DOCKER_HUB', variable: 'PASSWORD')]) {
-              sh "docker login -u sijisdocker -p ${PASSWORD}"
-     
-        
-      }
-      }
-      }
+      
        stage('Run on server'){
         steps{
           
