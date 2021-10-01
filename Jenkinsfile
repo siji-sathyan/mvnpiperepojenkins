@@ -27,7 +27,7 @@ pipeline {
         stage('package') {
             steps {
                 sh 'mvn package'
-                archiveArtifacts artifacts: 'target/*.war', followSymlinks: false
+                archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
             }
         }
         stage('Sonarqube analysis') {
